@@ -1,0 +1,25 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    container_name: db_students
+    restart: always
+    ports:
+      - 6022:5432
+    env_file:
+      - .env
+    volumes:
+      - pg_students:/var/lib/postgresql/data
+
+  node:
+    container_name: node_students
+    build: .
+    ports:
+      - 5009:5000
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+volumes:
+  pg_students:
